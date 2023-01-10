@@ -1,0 +1,11 @@
+.elements__image {
+  max-width: 282px;
+  min-height: 282px;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+  overflow: hidden;
+  position: relative;
+}
+
+
