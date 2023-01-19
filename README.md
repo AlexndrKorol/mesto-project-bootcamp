@@ -2,11 +2,11 @@
 <img src="https://github.com/blackcater/blackcater/raw/main/images/Hi.gif" height="32"/></h1>
 <h3 align="center">Я веб дизайнер, который решил изучать фронтенд</h3>
 <div id="header" align="center">
-  <img src="https://media.giphy.com/media/scZPhLqaVOM1qG4lT9/giphy.gif" width="100"/>
+  <img src="https://media.giphy.com/media/scZPhLqaVOM1qG4lT9/giphy.gif" width="200"/>
 </div>
 
 # Проект: Mesto - интерактивная страница
-В
+Новый проект посвященный отработке JS.
 
 ## В работе применены технологии:
 1. Flex верстка
@@ -23,4 +23,4 @@
 * [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
 **GitHub Pages**
-* [Посмотреть проект] (https://alexndrkorol.github.io/mesto-project-bootcamp/)
+* [Посмотреть проект](https://alexndrkorol.github.io/mesto-project-bootcamp/)
