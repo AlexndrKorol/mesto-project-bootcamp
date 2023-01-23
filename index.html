@@ -19,81 +19,70 @@
         <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар пользователя">
         <div class="profile__info">
           <div class="profile__name-container">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button" type="submit"></button>
+            <h1 class="profile__name">Александр</h1>
+            <button class="profile__edit-button" type="button"></button>
           </div>
-          <p class="profile__profession">Исследователь океана</p>
+          <p class="profile__profession">Любитель фотопленки</p>
         </div>
-        <button class="profile__add-button" type="submit"></button>
+        <button class="profile__add-button" type="button"></button>
         </section>
 
-        <section class="elements">
-          <div class="elements__item">
-            <img class="elements__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
-              <div class="elements__item-container">
-                <h2 class="elements__item-title">Карачаевск</h2>
-                <button class="elements__like-button" type="button"></button>
-              </div>
-          </div>
-
-          <div class="elements__item">
-            <img class="elements__image" src="./images/elbrus.jpg" alt="Эльбрус">
-              <div class="elements__item-container">
-                <h2 class="elements__item-title">Эльбрус</h2>
-                <button class="elements__like-button" type="button"></button>
-              </div>
-          </div>
-
-          <div class="elements__item">
-            <img class="elements__image" src="./images/dombay.jpg" alt="Домбай">
-              <div class="elements__item-container">
-                <h2 class="elements__item-title">Домбай</h2>
-                <button class="elements__like-button" type="button"></button>
-              </div>
-          </div>
-
-          <div class="elements__item">
-            <img class="elements__image" src="./images/altai.jpg" alt="Алтай">
-              <div class="elements__item-container">
-                <h2 class="elements__item-title">Алтай</h2>
-                <button class="elements__like-button" type="button"></button>
-              </div>
-          </div>
-
-          <div class="elements__item">
-            <img class="elements__image" src="./images/baikal.jpg" alt="Байкал">
-              <div class="elements__item-container">
-                <h2 class="elements__item-title">Байкал</h2>
-                <button class="elements__like-button" type="button"></button>
-              </div>
-          </div>
-
-          <div class="elements__item">
-            <img class="elements__image" src="./images/spb.jpg" alt="Санкт-Петербург">
-              <div class="elements__item-container">
-                <h2 class="elements__item-title">Санкт-Петербург</h2>
-                <button class="elements__like-button" type="button"></button>
-              </div>
-          </div>
-      </section>
+        <section class="elements"></section>
     </main>
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2023. Александр Король.</p>
     </footer>
 
-    <!-- <section class="popup popup_opened"> отобразит попап, сейчас он скрыт -->
-    <div class="popup">
+    <!--popup_opened делает видимым попап-->
+    <!--попап профиля -->
+    <div class="popup popup_profile">
       <div class="popup__container">
         <button class="popup__close-button" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form">
-          <input class="popup__input popup__name" name="user"  type="text" placeholder="Ваше имя" value="Жак-Ив Кусто">
-          <input class="popup__input popup__profession" name="profession" type="text"placeholder="Ваша профессия" value="Исследователь океана">
+          <input class="popup__input popup__name" name="user"  type="text" placeholder="Ваше имя">
+          <input class="popup__input popup__description" name="profession" type="text" placeholder="Ваша профессия">
+          <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
-        <button class="popup__submit-button" type="submit">Сохранить</button>
       </div>
     </div>
 
+    <!--попап места -->
+    <div class="popup popup_place">
+      <div class="popup__container">
+        <button class="popup__close-button" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form">
+          <input class="popup__input popup__name" name="place"  type="text" placeholder="Название">
+          <input class="popup__input popup__description" name="description" type="text" placeholder="Ссылка на картинку">
+          <button class="popup__submit-button" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+
+    <!--попап открытого фото-->
+    <div class="popup popup_photo">
+      <div class="popup__container_fullscreen">
+        <figure class="popup__image-container">
+          <button class="popup__close-button" type="button"></button>
+          <img class="popup__image" src="#" alt="Изображение">
+          <figurecaption class="popup__caption"></figurecaption>
+        </figure>
+      </div>
+    </div>
+
+    <template id="element-template">
+      <div class="elements__item">
+        <img class="elements__image" type="button">
+        <button class="elements__delete-button" type="button"></button>
+          <div class="elements__item-container">
+            <h2 class="elements__item-title"></h2>
+            <button class="elements__like-button" type="button"></button>
+          </div>
+      </div>
+    </template>
+
+    <script src="./scripts/script.js"></script>
   </body>
 </html>
