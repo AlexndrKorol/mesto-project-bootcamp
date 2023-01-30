@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ваш личный фотоальбом">
+  <meta name="keywords" content="Проект Место. Для ваших любимых мест.">
+  <meta name="author" content="Alexandr__Korol">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Место. Интерактивная страница</title>
+</head>
+
+<body class="page">
+
+  <header class="header">
+    <img class="logo header__logo" src="<%=require('./images/logo.svg')%>" alt="Место логотип">
+  </header>
+
+  <main class="content">
+
+    <section class="profile">
+      <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар пользователя">
+      <div class="profile__info">
+        <div class="profile__name-container">
+          <h1 class="profile__name">Александр</h1>
+          <button class="profile__edit-button" type="button"></button>
+        </div>
+        <p class="profile__profession">Любитель фотопленки</p>
+      </div>
+      <button class="profile__add-button" type="button"></button>
+    </section>
+
+    <section class="elements"></section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2023. Александр Король.</p>
+  </footer>
+
+  <!--попап профиля -->
+  <div class="popup popup_profile">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form" name="profile-form" novalidate method="get">
+        <div class="popup__input-container">
+          <input class="popup__input popup__name" id="input-user" name="user" type="text" placeholder="Ваше имя"
+            value="" minlength="2" maxlength="40" required />
+          <span class="popup__form-error" id="user-error"></span>
+          <input class="popup__input popup__description" id="input-description" name="description" type="text"
+            placeholder="Ваша профессия" value="" minlength="2" maxlength="200" required />
+          <span class="popup__form-error" id="description-error"></span>
+        </div>
+        <button class="popup__submit-button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <!--попап места -->
+  <div class="popup popup_place">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" name="place-form" novalidate method="post">
+        <div class="popup__input-container">
+          <input class="popup__input popup__name" id="input-place" name="place" type="text" placeholder="Название"
+            minlength="2" maxlength="30" required />
+          <span class="popup__form-error" id="place-error"></span>
+          <input class="popup__input popup__description" id="input-link" name="link" type="url"
+            placeholder="Ссылка на картинку" required />
+          <span class="popup__form-error" id="link-error"></span>
+        </div>
+        <button class="popup__submit-button" type="submit">Создать</button>
+      </form>
+    </div>
+  </div>
+
+  <!--попап открытого фото-->
+  <div class="popup popup_photo">
+    <div class="popup__container_fullscreen">
+      <figure class="popup__image-container">
+        <button class="popup__close-button" type="button"></button>
+        <img class="popup__image" src="#" alt="Изображение">
+        <figurecaption class="popup__caption"></figurecaption>
+      </figure>
+    </div>
+  </div>
+
+  <template id="element-template">
+    <div class="elements__item">
+      <img class="elements__image" type="button">
+      <button class="elements__delete-button" type="button"></button>
+      <div class="elements__item-container">
+        <h2 class="elements__item-title"></h2>
+        <button class="elements__like-button" type="button"></button>
+      </div>
+    </div>
+  </template>
+
+</body>
+
+</html>

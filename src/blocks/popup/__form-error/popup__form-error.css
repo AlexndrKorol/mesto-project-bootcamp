@@ -1,0 +1,13 @@
+.popup__form-error {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  padding-top: 5px;
+  padding-bottom: 13px;
+  height: 30px;
+}
+
+.popup__form-error:last-child {
+  padding-bottom: 0;
+}
