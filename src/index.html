@@ -7,7 +7,8 @@
   <meta name="keywords" content="Проект Место. Для ваших любимых мест.">
   <meta name="author" content="Alexandr__Korol">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Место. Интерактивная страница</title>
+  <title>Место. Для ваших любимых фотографий.</title>
+  <link rel="shortcut icon" href="<%=require('./images/favicon.png')%>" type="image/x-icon">
 </head>
 
 <body class="page">
@@ -19,13 +20,16 @@
   <main class="content">
 
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар пользователя">
+      <div class="profile__avatar-container">
+        <img class="profile__avatar-edit" src="<%=require('./images/avatar-edit.svg')%>" alt="Изменить аватар">
+        <img class="profile__avatar" src="#" alt="Аватар пользователя">
+      </div>
       <div class="profile__info">
         <div class="profile__name-container">
-          <h1 class="profile__name">Александр</h1>
+          <h1 class="profile__name"></h1>
           <button class="profile__edit-button" type="button"></button>
         </div>
-        <p class="profile__profession">Любитель фотопленки</p>
+        <p class="profile__profession"></p>
       </div>
       <button class="profile__add-button" type="button"></button>
     </section>
@@ -75,6 +79,22 @@
     </div>
   </div>
 
+  <!--попап смены фотографии пользователя-->
+  <div class="popup popup_avatar">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="popup__form" name="avatar-form" novalidate method="get">
+        <div class="popup__input-container">
+          <input class="popup__input popup__description" id="input-avatar" name="avatar" type="url"
+            placeholder="Ссылка на аватар" minlength="2" required />
+          <span class="popup__form-error" id="avatar-error"></span>
+        </div>
+        <button class="popup__submit-button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
   <!--попап открытого фото-->
   <div class="popup popup_photo">
     <div class="popup__container_fullscreen">
@@ -92,7 +112,10 @@
       <button class="elements__delete-button" type="button"></button>
       <div class="elements__item-container">
         <h2 class="elements__item-title"></h2>
-        <button class="elements__like-button" type="button"></button>
+        <div class="elements__count-container">
+          <button class="elements__like-button" type="button"></button>
+          <p class="elements__like-count" id="like-count"></p>
+        </div>
       </div>
     </div>
   </template>

@@ -1,12 +1,13 @@
 .popup__submit-button_disabled {
   max-width: 358px;
-  min-height: 50px;box-sizing: border-box;
+  min-height: 50px;
+  box-sizing: border-box;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   color: rgba(0, 0, 0, 0.2);
-  cursor: not-allowed;
   padding:0;
   margin: 18px 36px 37px;
+  cursor: default;
 }
 
 @media screen and (max-width: 767px) {

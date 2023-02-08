@@ -17,13 +17,13 @@
 6. JavaScript
 7. Валидация формы через JS
 8. Сборка через webpack
-
+9. Работа с API
 ## План доработки на будущее:
-Работа охватывает несколько спринтов в рамках Yandex.Practicum.
-В следующих спринтах работа будет посвящена JS для создания интерактива на странице и не только.
+1) Добавить функциональности в виде подтверждения удаления карточки, через отдельный попап.
+2) Улучшить UX функциональных элементов, их визуализацию.
 
 **Figma**
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+* [Ссылка на базовый макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
 **GitHub Pages**
 * [Посмотреть проект](https://alexndrkorol.github.io/mesto-project-bootcamp/)

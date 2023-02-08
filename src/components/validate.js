@@ -10,7 +10,7 @@ function hideError(inputElement, errorElement, config) {
 }
 
 export function toggleButtonDisabled(buttonElement, isActive, config) {
-  if(isActive) {
+  if (isActive) {
     buttonElement.disabled = false;
     buttonElement.classList.remove(config.inactiveButtonClass);
   } else {
