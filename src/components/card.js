@@ -1,7 +1,7 @@
-import { configSelectorForm, showAllCards } from "./index.js";
-import { addCardServer, deleteCardServer, getLike, deleteLike, myUserId } from "./api.js";
+import { configSelectorForm, myUserId } from "./index.js";
+import { addCardServer, deleteCardServer, getLike, deleteLike } from "./api.js";
 import { toggleButtonDisabled } from "./validate.js";
-import { defferedFuncPromise, saveStatus } from "./utils.js";
+import { listOfElements, resetForm, saveStatus } from "./utils.js";
 import {
   photoPopup,
   popupPhotoImage,
@@ -11,7 +11,8 @@ import {
   userDescriptionPlaceInput,
   popupPlaceFormSubmitButton,
   closePopup,
-  openPopup
+  openPopup,
+  formPlaceElement
  } from "./modal.js"
 
 //6 КАРТОЧЕК ИЗ КОРОБКИ И РЕНДЕР КАРТОЧЕК
@@ -27,11 +28,19 @@ export function createElement(card) {
 
   elementsLike.addEventListener('click', () => {
     if (elementsLike.classList.contains('elements__like-button_active')) {
-      deleteLike(card._id).then((res) => likeCounter.textContent = res.likes.length);
-      elementsLike.classList.remove('elements__like-button_active');
+      deleteLike(card._id)
+      .then((res) => {
+        likeCounter.textContent = res.likes.length;
+        elementsLike.classList.remove('elements__like-button_active');
+      })
+      .catch((err) => console.log('Ошибка связана с лайком', err));
     } else {
-      getLike(card._id).then((res) => likeCounter.textContent = res.likes.length);
-      elementsLike.classList.add('elements__like-button_active');
+      getLike(card._id)
+      .then((res) => {
+        likeCounter.textContent = res.likes.length;
+        elementsLike.classList.add('elements__like-button_active');
+      })
+      .catch((err) => console.log('Ошибка связана с лайком', err));
     }
   });
 
@@ -44,8 +53,9 @@ export function createElement(card) {
   });
 
   elementsDelete.addEventListener('click', () => {
-    cardElement.remove();
-    deleteCardServer(card._id);
+    deleteCardServer(card._id)
+    .then(cardElement.remove())
+    .catch((err) => console.log(err));
   });
 
   elementsTitle.textContent = card.name;
@@ -71,23 +81,20 @@ export function createElement(card) {
 //ДОБАВИТЬ КАРТОЧКУ НА СТРАНИЦУ
 export function handleFormPlaceSubmit(evt) {
   evt.preventDefault();
-
-  saveStatus(true, popupPlaceFormSubmitButton);
-  toggleButtonDisabled(popupPlaceFormSubmitButton, false, configSelectorForm);
-
-  addCardServer(userNamePlaceInput.value, userDescriptionPlaceInput.value).then(
-    () => defferedFuncPromise(showAllCards, 500)
-  )
-  .catch(() => console.error('Ошибка создания карточки'))
-  .finally(() => closePopup(placePopup));
+  addCardServer(userNamePlaceInput.value, userDescriptionPlaceInput.value)
+    .then((res) => {
+      saveStatus(true, popupPlaceFormSubmitButton);
+      toggleButtonDisabled(popupPlaceFormSubmitButton, false,configSelectorForm);
+      //добавляем точечно карточку в начало массива
+      listOfElements.prepend(createElement(res));
+      closePopup(placePopup);
+      resetForm(formPlaceElement);
+    })
+    .catch(() => {
+      console.error('Ошибка создания карточки');
+    })
+    .finally(() => {
+      saveStatus(false, popupPlaceFormSubmitButton);
+      toggleButtonDisabled(popupPlaceFormSubmitButton, false,configSelectorForm);
+    })
 }
-
-
-
-//для себя - добавление карточки, через async await
-// export async function handleFormPlaceSubmit(evt) {
-//   evt.preventDefault();
-//   await addCardServer(userNamePlaceInput.value, userDescriptionPlaceInput.value);
-//   showAllCards();
-//   closePopup(placePopup);
-

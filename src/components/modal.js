@@ -1,7 +1,7 @@
 import { configSelectorForm } from "./index.js";
 import { toggleButtonDisabled } from "./validate.js";
 import { changeUserAvatar, changeUserInfo } from "./api.js";
-import { defferedFuncPromise, saveStatus } from "./utils.js";
+import { resetForm, saveStatus } from "./utils.js";
 
 
 //КОНСТАНТЫ ПОПАПА
@@ -20,15 +20,15 @@ export const popupPhotoImage = document.querySelector('.popup__image');
 export const popupPhotoCaption = document.querySelector('.popup__caption');
 
 //КОНСТАНТЫ ФОРМЫ
-export const formProfileElement = profilePopup.querySelector('.popup__form');
+export const formProfileElement = document.forms['profile-form'];
 export const userNameInput = formProfileElement.querySelector('.popup__name');
 export const userDescriptionInput = formProfileElement.querySelector('.popup__description');
 
-export const formPlaceElement = placePopup.querySelector('.popup__form');
+export const formPlaceElement = document.forms['place-form'];
 export const userNamePlaceInput = formPlaceElement.querySelector('.popup__name');
 export const userDescriptionPlaceInput = formPlaceElement.querySelector('.popup__description');
 
-export const formAvatarElement = avatarPopup.querySelector('.popup__form');
+export const formAvatarElement = document.forms['avatar-form'];
 export const userAvatarInput = formAvatarElement.querySelector('.popup__description');
 
 export const popupPlaceFormSubmitButton = document.querySelector('.popup_place .popup__submit-button');
@@ -37,54 +37,48 @@ const popupAvatarFormSubmitButton = document.querySelector('.popup_avatar .popup
 
 //ОТКРЫТИЕ ПОПАПА ФОРМЫ И КАРТОЧКИ
 editProfileButton.addEventListener('click', () => {
-  userNameInput.value = userName.textContent;
-  userDescriptionInput.value = userProfession.textContent;
-  toggleButtonDisabled(popupProfileFormSubmitButton, false, configSelectorForm);
-  saveStatus(false, popupProfileFormSubmitButton);
+  userNameInput.value = userNameInput.value || userName.textContent;
+  userDescriptionInput.value = userDescriptionInput.value || userProfession.textContent;
   openPopup(profilePopup);
-});
+})
 
 addPlaceButton.addEventListener('click', () => {
-  toggleButtonDisabled(popupPlaceFormSubmitButton, formPlaceElement.checkValidity(), configSelectorForm);
-  saveStatus(false, popupPlaceFormSubmitButton);
   openPopup(placePopup);
 });
 
 editAvatarButton.addEventListener('click', () => {
-  toggleButtonDisabled(popupAvatarFormSubmitButton, formAvatarElement.checkValidity(), configSelectorForm);
-  saveStatus(false, popupAvatarFormSubmitButton);
   openPopup(avatarPopup);
 });
 
 //ОБРАБОТЧИКИ ЗАКРЫТИЯ И ОТКРЫТИЯ ПОПАПА + ESCAPE
  export function openPopup(modalElement) {
 
-  const localClosePopup = () => {
+  const handlePopupClose = () => {
     modalElement.classList.remove('popup_opened');
-    window.removeEventListener('keydown', localEscClosePopup);
-    modalElement.removeEventListener('click', modalClick);
+    window.removeEventListener('keydown', handleEscape);
+    modalElement.removeEventListener('click', handleModalClick);
   };
 
-  const localEscClosePopup = (event) => {
+  const handleEscape = (event) => {
     const isEsc = event.key === 'Escape';
 
     if (isEsc === true) {
-      localClosePopup();
+      handlePopupClose();
     }
   };
 
-  const modalClick = (event) => {
+  const handleModalClick = (event) => {
     const itsEmpty = event.target.classList.contains('popup');
     const itsButtonClose = event.target.classList.contains('popup__close-button');
 
     if (itsEmpty || itsButtonClose) {
-      localClosePopup();
+      handlePopupClose();
     }
   };
 
-  modalElement.closePopup = localClosePopup;
-  modalElement.addEventListener('click', modalClick);
-  window.addEventListener('keydown', localEscClosePopup);
+  modalElement.closePopup = handlePopupClose;
+  modalElement.addEventListener('click', handleModalClick);
+  window.addEventListener('keydown', handleEscape);
   modalElement.classList.add('popup_opened');
 }
 
@@ -92,68 +86,44 @@ export function closePopup(modalElement) {
   modalElement.closePopup();
 }
 
-
 //ОБРАБОТЧИК ПОПАПА ПРОФАЙЛА
-
-// export function handleFormSubmit(evt) {
-//   evt.preventDefault();
-//   saveStatus(true, popupProfileFormSubmitButton);
-//   userName.textContent = userNameInput.value;
-//   userProfession.textContent = userDescriptionInput.value;
-//   changeUserInfo(userNameInput.value, userDescriptionInput.value);
-//   closePopup(profilePopup);
-// }
-
-
-export function handleFormSubmit(evt) {
+export function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  saveStatus(true, popupProfileFormSubmitButton);
-  toggleButtonDisabled(popupProfileFormSubmitButton, false, configSelectorForm);
-
   changeUserInfo(userNameInput.value, userDescriptionInput.value)
     .then((data) => {
-      return defferedFuncPromise(() => {
-        userName.textContent = data.name;
-        userProfession.textContent = data.about;
-      }, 500);
+      saveStatus(true, popupProfileFormSubmitButton);
+      toggleButtonDisabled(popupProfileFormSubmitButton, false, configSelectorForm);
+      userName.textContent = data.name;
+      userProfession.textContent = data.about;
+      closePopup(profilePopup);
+      resetForm(formProfileElement);
     })
-    .catch((res) => console.error(`Ошибка создания карточки: ${res.status}`))
-    .finally(() => closePopup(profilePopup));
+    .catch((err) => console.error(`Ошибка создания карточки: ${err}`))
+    .finally(() => {
+      saveStatus(false, popupProfileFormSubmitButton);
+      toggleButtonDisabled(popupProfileFormSubmitButton, false, configSelectorForm);
+    });
 }
-
 
 //ОБРАБОТЧИК ПОПАПА АВАТАРА
-
-export function handleFormAvatarSubmit(evt) {
+export function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
-  saveStatus(true, popupAvatarFormSubmitButton);
-  toggleButtonDisabled(popupAvatarFormSubmitButton, false, configSelectorForm);
-  changeUserAvatar(userAvatarInput.value).then(data => {
-    return defferedFuncPromise(() => {
-      editAvatarButton.src = data.avatar;
-      editAvatarButton.alt = data.name;
-    }, 500);
+
+  changeUserAvatar(userAvatarInput.value)
+  .then(data => {
+    saveStatus(true, popupAvatarFormSubmitButton);
+    toggleButtonDisabled(popupAvatarFormSubmitButton, false, configSelectorForm);
+    editAvatarButton.src = data.avatar;
+    editAvatarButton.alt = data.name;
+    closePopup(avatarPopup);
+    resetForm(formAvatarElement);
   })
-  .catch((res) => console.error(`Ошибка создания аватара: ${res.status}`))
-  .finally(() => closePopup(avatarPopup))
+  .catch((err) => console.error(`Ошибка создания аватара: ${err}`))
+  .finally(() => {
+    saveStatus(false, popupAvatarFormSubmitButton);
+    toggleButtonDisabled(popupAvatarFormSubmitButton, false, configSelectorForm);
+  })
 }
-
-
-// export function handleFormAvatarSubmit(evt) {
-//   evt.preventDefault();
-//   saveStatus(true, popupProfileFormSubmitButton)
-//   changeUserAvatar(userNameInput.value, userDescriptionInput.value)
-//     .then((res) => {
-//       editAvatarButton.src = userAvatarInput.value;
-//       closePopup(avatarPopup);
-//     })
-//     .catch((res) => {
-//       console.log(`Ошибка создания карточки: ${res.status}`);
-//     })
-//     .finally(() => {
-//       saveStatus(false, popupAvatarFormSubmitButton)
-//   })
-// }
 
 
 

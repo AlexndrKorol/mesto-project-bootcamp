@@ -9,39 +9,36 @@ import {
   formPlaceElement,
   formProfileElement,
   formAvatarElement,
-  handleFormSubmit,
-  handleFormAvatarSubmit,
+  handleProfileFormSubmit,
+  handleAvatarFormSubmit,
   userName,
   userProfession,
 } from "./modal.js";
 
+//вводим переменную для айди вместо хардкод значения ранее, далее передаем пер в запросе к серверу
+export let myUserId = '';
 
-//отобразим карточки, которые есть для нас на сервере
-export const showAllCards = () => {
-  listOfElements.replaceChildren();
-
-  getAllCards()
-  .then((data) => {
-    data.forEach((card) => {
+//Промис получает сразу все необходимые нам данные при загрузке страницы
+Promise.all([getUserInfo(), getAllCards()])
+  .then(([userData, cards]) => {
+    editAvatarButton.src = userData.avatar;
+    userName.textContent = userData.name;
+    userProfession.textContent = userData.about;
+    myUserId = userData._id;
+    cards.forEach((card) => {
       const newCard = createElement(card);
        listOfElements.append(newCard);
     })
+  })
+  .catch(err => {
+    console.log(err)
   });
-};
-
-showAllCards();
-
-getUserInfo().then((res) => {
-  editAvatarButton.src = res.avatar;
-  userName.textContent = res.name;
-  userProfession.textContent = res.about;
-});
 
 formPlaceElement.addEventListener('submit', handleFormPlaceSubmit);
 
-formProfileElement.addEventListener('submit', handleFormSubmit);
+formProfileElement.addEventListener('submit', handleProfileFormSubmit);
 
-formAvatarElement.addEventListener('submit', handleFormAvatarSubmit);
+formAvatarElement.addEventListener('submit', handleAvatarFormSubmit);
 
 //КОНФИГУРАЦИОННЫЙ ОБЪЕКТ
 export const configSelectorForm = {

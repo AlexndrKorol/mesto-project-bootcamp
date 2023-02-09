@@ -39,8 +39,6 @@ function setEventListener (formElement, config) {
 
   formElement.addEventListener('submit', (e) => {
     e.preventDefault();
-    formElement.reset();
-    console.log('Форма отправляется');
   });
 
   [...inputList].forEach((inputElement) => {
