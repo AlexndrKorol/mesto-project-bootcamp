@@ -1,21 +1,21 @@
 .popup__submit-button_disabled {
-  max-width: 358px;
+  min-width: 358px;
   min-height: 50px;
   box-sizing: border-box;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   color: rgba(0, 0, 0, 0.2);
   padding:0;
-  margin: 18px 36px 37px;
+  margin: 18px auto 37px;
   cursor: default;
 }
 
 @media screen and (max-width: 767px) {
   .popup__submit-button_disabled {
-    max-width: 238px;
+    min-width: 238px;
     min-height: 46px;
     font-size: 14px;
     line-height: 17px;
-    margin: 15px 22px 25px;
+    margin: 15px auto 25px;
   }
 }

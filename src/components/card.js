@@ -1,4 +1,4 @@
-import { configSelectorForm, myUserId } from "./index.js";
+import { myUserId } from "./index.js";
 import { addCardServer, deleteCardServer, getLike, deleteLike } from "./api.js";
 import { toggleButtonDisabled } from "./validate.js";
 import { listOfElements, resetForm, saveStatus } from "./utils.js";
@@ -14,6 +14,7 @@ import {
   openPopup,
   formPlaceElement
  } from "./modal.js"
+ import { configSelectorForm } from "./constants.js";
 
 //6 КАРТОЧЕК ИЗ КОРОБКИ И РЕНДЕР КАРТОЧЕК
 const template = document.querySelector('#element-template').content.querySelector('.elements__item');
@@ -54,7 +55,7 @@ export function createElement(card) {
 
   elementsDelete.addEventListener('click', () => {
     deleteCardServer(card._id)
-    .then(cardElement.remove())
+    .then(() => cardElement.remove())
     .catch((err) => console.log(err));
   });
 
@@ -81,9 +82,9 @@ export function createElement(card) {
 //ДОБАВИТЬ КАРТОЧКУ НА СТРАНИЦУ
 export function handleFormPlaceSubmit(evt) {
   evt.preventDefault();
+  saveStatus(true, popupPlaceFormSubmitButton);
   addCardServer(userNamePlaceInput.value, userDescriptionPlaceInput.value)
     .then((res) => {
-      saveStatus(true, popupPlaceFormSubmitButton);
       toggleButtonDisabled(popupPlaceFormSubmitButton, false,configSelectorForm);
       //добавляем точечно карточку в начало массива
       listOfElements.prepend(createElement(res));
@@ -95,6 +96,5 @@ export function handleFormPlaceSubmit(evt) {
     })
     .finally(() => {
       saveStatus(false, popupPlaceFormSubmitButton);
-      toggleButtonDisabled(popupPlaceFormSubmitButton, false,configSelectorForm);
     })
 }

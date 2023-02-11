@@ -1,4 +1,4 @@
-import { configSelectorForm } from "./index.js";
+import { configSelectorForm } from "./constants.js";
 import { toggleButtonDisabled } from "./validate.js";
 import { changeUserAvatar, changeUserInfo } from "./api.js";
 import { resetForm, saveStatus } from "./utils.js";
@@ -89,9 +89,9 @@ export function closePopup(modalElement) {
 //ОБРАБОТЧИК ПОПАПА ПРОФАЙЛА
 export function handleProfileFormSubmit(evt) {
   evt.preventDefault();
+  saveStatus(true, popupProfileFormSubmitButton);
   changeUserInfo(userNameInput.value, userDescriptionInput.value)
     .then((data) => {
-      saveStatus(true, popupProfileFormSubmitButton);
       toggleButtonDisabled(popupProfileFormSubmitButton, false, configSelectorForm);
       userName.textContent = data.name;
       userProfession.textContent = data.about;
@@ -101,17 +101,15 @@ export function handleProfileFormSubmit(evt) {
     .catch((err) => console.error(`Ошибка создания карточки: ${err}`))
     .finally(() => {
       saveStatus(false, popupProfileFormSubmitButton);
-      toggleButtonDisabled(popupProfileFormSubmitButton, false, configSelectorForm);
     });
 }
 
 //ОБРАБОТЧИК ПОПАПА АВАТАРА
 export function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
-
+  saveStatus(true, popupAvatarFormSubmitButton);
   changeUserAvatar(userAvatarInput.value)
   .then(data => {
-    saveStatus(true, popupAvatarFormSubmitButton);
     toggleButtonDisabled(popupAvatarFormSubmitButton, false, configSelectorForm);
     editAvatarButton.src = data.avatar;
     editAvatarButton.alt = data.name;
@@ -121,7 +119,6 @@ export function handleAvatarFormSubmit(evt) {
   .catch((err) => console.error(`Ошибка создания аватара: ${err}`))
   .finally(() => {
     saveStatus(false, popupAvatarFormSubmitButton);
-    toggleButtonDisabled(popupAvatarFormSubmitButton, false, configSelectorForm);
   })
 }
 

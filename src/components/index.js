@@ -14,6 +14,7 @@ import {
   userName,
   userProfession,
 } from "./modal.js";
+import { configSelectorForm } from "./constants.js";
 
 //вводим переменную для айди вместо хардкод значения ранее, далее передаем пер в запросе к серверу
 export let myUserId = '';
@@ -39,14 +40,5 @@ formPlaceElement.addEventListener('submit', handleFormPlaceSubmit);
 formProfileElement.addEventListener('submit', handleProfileFormSubmit);
 
 formAvatarElement.addEventListener('submit', handleAvatarFormSubmit);
-
-//КОНФИГУРАЦИОННЫЙ ОБЪЕКТ
-export const configSelectorForm = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit-button',
-  inactiveButtonClass: 'popup__submit-button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-};
 
 enableValidation(configSelectorForm);
